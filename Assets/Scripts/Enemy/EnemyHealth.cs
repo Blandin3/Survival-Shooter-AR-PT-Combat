@@ -7,6 +7,7 @@ public class EnemyHealth : MonoBehaviour
     public float sinkSpeed = 2.5f;
     public int scoreValue = 10;
     public AudioClip deathClip;
+    public AudioClip spawnClip;
 
 
     Animator anim;
@@ -27,6 +28,13 @@ public class EnemyHealth : MonoBehaviour
 
         //Set current health
         currentHealth = startingHealth;
+
+        // Play spawn sound
+        if (spawnClip != null)
+        {
+            enemyAudio.clip = spawnClip;
+            enemyAudio.Play();
+        }
     }
 
 
@@ -91,6 +99,7 @@ public class EnemyHealth : MonoBehaviour
         GetComponent<Rigidbody>().isKinematic = true;
         isSinking = true;
         ScoreManager.score += scoreValue;
+        ScoreManager.AddKill();
         Destroy(gameObject, 2f);
     }
 }

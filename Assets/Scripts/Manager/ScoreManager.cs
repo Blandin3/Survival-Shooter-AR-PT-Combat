@@ -1,24 +1,40 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 
 public class ScoreManager : MonoBehaviour
 {
     public static int score;
+    public static int enemiesDefeated;
+    public static float timeSurvived;
 
+    public Text scoreText;
+    public Text timerText;
 
-    Text text;
+    bool gameOver = false;
 
-
-    void Awake ()
+    void Awake()
     {
-        text = GetComponent <Text> ();
         score = 0;
+        enemiesDefeated = 0;
+        timeSurvived = 0f;
     }
 
-
-    void Update ()
+    void Update()
     {
-        text.text = "Score: " + score;
+        if (!gameOver)
+            timeSurvived += Time.deltaTime;
+
+        if (scoreText) scoreText.text = "Score: " + score;
+        if (timerText) timerText.text = "Time: " + Mathf.FloorToInt(timeSurvived) + "s";
+    }
+
+    public void StopTimer()
+    {
+        gameOver = true;
+    }
+
+    public static void AddKill()
+    {
+        enemiesDefeated++;
     }
 }
