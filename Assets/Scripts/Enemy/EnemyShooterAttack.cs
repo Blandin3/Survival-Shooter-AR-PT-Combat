@@ -46,9 +46,10 @@ public class EnemyShooterAttack : MonoBehaviour
 
         Transform spawnAt = firePoint != null ? firePoint : transform;
         GameObject bullet = EnemyBulletPool.Instance.Get();
-        bullet.transform.position = spawnAt.position;
-        bullet.transform.rotation = Quaternion.LookRotation(
-            (new Vector3(player.position.x, spawnAt.position.y, player.position.z) - spawnAt.position).normalized);
+        Vector3 spawnPos = spawnAt.position + spawnAt.forward * 1.5f; // offset forward to avoid spawning inside enemy
+        Vector3 dir = (new Vector3(player.position.x, spawnAt.position.y, player.position.z) - spawnPos).normalized;
+        bullet.transform.position = spawnPos;
+        bullet.transform.rotation = Quaternion.LookRotation(dir);
 
         if (audioSource != null && shootClip != null)
         {

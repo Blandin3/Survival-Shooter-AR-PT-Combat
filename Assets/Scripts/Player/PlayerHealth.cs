@@ -62,10 +62,10 @@ public class PlayerHealth : MonoBehaviour
         currentHealth -= amount;
 
         //Merubah tampilan dari health slider
-        healthSlider.value = currentHealth;
+        if (healthSlider) healthSlider.value = currentHealth;
 
         //Memainkan suara ketika terkena damage
-        playerAudio.Play();
+        if (playerAudio) playerAudio.Play();
 
         //Memanggil method Death() jika darahnya kurang dari sama dengan 10 dan belu mati
         if (currentHealth <= 0 && !isDead)
@@ -89,7 +89,7 @@ public class PlayerHealth : MonoBehaviour
         }
 
         //Merubah tampilan dari health slider
-        healthSlider.value = currentHealth;
+        if (healthSlider) healthSlider.value = currentHealth;
     }
 
 
