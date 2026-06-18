@@ -10,7 +10,8 @@ public class EnemyFactory : MonoBehaviour, IFactory
 
     public GameObject FactoryMethod(int tag)
     {
-        GameObject enemy = Instantiate(enemyPrefab[tag], spawnPoints[tag].position, spawnPoints[tag].rotation);
+        int index = Mathf.Clamp(tag, 0, Mathf.Min(enemyPrefab.Length, spawnPoints.Length) - 1);
+        GameObject enemy = Instantiate(enemyPrefab[index], spawnPoints[index].position, spawnPoints[index].rotation);
         return enemy;
     }
 }

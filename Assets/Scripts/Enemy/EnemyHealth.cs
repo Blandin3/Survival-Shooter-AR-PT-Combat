@@ -62,10 +62,11 @@ public class EnemyHealth : MonoBehaviour
         currentHealth -= amount;
 
         //Ganti posisi particle
-        hitParticles.transform.position = hitPoint;
-
-        //Play particle system
-        hitParticles.Play();
+        if (hitParticles != null)
+        {
+            hitParticles.transform.position = hitPoint;
+            hitParticles.Play();
+        }
 
         //Dead jika health <= 0
         if (currentHealth <= 0)
@@ -84,11 +85,14 @@ public class EnemyHealth : MonoBehaviour
         capsuleCollider.isTrigger = true;
 
         //trigger play animation Dead
-        anim.SetTrigger("Dead");
+        if (anim != null) anim.SetTrigger("Dead");
 
         //Play Sound Dead
-        enemyAudio.clip = deathClip;
-        enemyAudio.Play();
+        if (deathClip != null)
+        {
+            enemyAudio.clip = deathClip;
+            enemyAudio.Play();
+        }
     }
 
     public void StartSinking()

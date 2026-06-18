@@ -18,15 +18,23 @@ public class Bullet : MonoBehaviour
         transform.Translate(Vector3.forward * speed * Time.deltaTime);
         timer += Time.deltaTime;
         if (timer >= lifetime)
-            BulletPool.Instance.Return(gameObject);
+        {
+            if (EnemyBulletPool.Instance != null)
+                EnemyBulletPool.Instance.Return(gameObject);
+            else
+                gameObject.SetActive(false);
+        }
     }
 
     void OnTriggerEnter(Collider other)
     {
-        EnemyHealth enemy = other.GetComponent<EnemyHealth>();
-        if (enemy != null)
-            enemy.TakeDamage(damage, transform.position);
+        PlayerHealth player = other.GetComponent<PlayerHealth>();
+        if (player != null)
+            player.TakeDamage(damage);
 
-        BulletPool.Instance.Return(gameObject);
+        if (EnemyBulletPool.Instance != null)
+            EnemyBulletPool.Instance.Return(gameObject);
+        else
+            gameObject.SetActive(false);
     }
 }

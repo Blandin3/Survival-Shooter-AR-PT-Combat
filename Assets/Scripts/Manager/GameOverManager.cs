@@ -39,8 +39,14 @@ public class GameOverManager : MonoBehaviour
 
         if (scoreManager) scoreManager.StopTimer();
 
+        // Wipe all enemies
+        foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+            Destroy(enemy);
+
         // Save to leaderboard
         LeaderboardManager.SaveSession(ScoreManager.score, ScoreManager.enemiesDefeated, ScoreManager.timeSurvived);
+        PlayerPrefs.SetInt(MainMenuManager.SAVE_EXISTS_KEY, 1);
+        PlayerPrefs.Save();
 
         // Show end game UI
         if (endGamePanel)

@@ -30,8 +30,8 @@ public class EnemyManager : MonoBehaviour
             return;
         }
 
-        //Mendapatkan nilai random
-        int spawnEnemy = Random.Range(0, 3);
+        //Mendapatkan nilai random (0=Zombunny, 1=ZomBear, 2=Hellephant, 3=Shooter)
+        int spawnEnemy = Random.Range(0, factory.enemyPrefab.Length);
 
         //Memduplikasi enemy
         Factory.FactoryMethod(spawnEnemy);
