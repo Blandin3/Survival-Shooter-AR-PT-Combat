@@ -78,32 +78,34 @@ public class EnemyHealth : MonoBehaviour
 
     void Death()
     {
-        //set isdead
         isDead = true;
 
-        //SetCapcollider ke trigger
-        capsuleCollider.isTrigger = true;
+        // Add score immediately on death — does not rely on animation event
+        ScoreManager.score += scoreValue;
+        ScoreManager.AddKill();
 
-        //trigger play animation Dead
+        if (capsuleCollider) capsuleCollider.isTrigger = true;
+
         if (anim != null) anim.SetTrigger("Dead");
 
-        //Play Sound Dead
         if (deathClip != null)
         {
             enemyAudio.clip = deathClip;
             enemyAudio.Play();
         }
+
+        // Start sinking immediately if no animator to call StartSinking
+        if (anim == null)
+            StartSinking();
     }
 
     public void StartSinking()
     {
-        //disable Navmesh Component
-        GetComponent<UnityEngine.AI.NavMeshAgent>().enabled = false;
-        //Set rigisbody ke kimematic
-        GetComponent<Rigidbody>().isKinematic = true;
+        var nav = GetComponent<UnityEngine.AI.NavMeshAgent>();
+        if (nav) nav.enabled = false;
+        var rb = GetComponent<Rigidbody>();
+        if (rb) rb.isKinematic = true;
         isSinking = true;
-        ScoreManager.score += scoreValue;
-        ScoreManager.AddKill();
         Destroy(gameObject, 2f);
     }
 }

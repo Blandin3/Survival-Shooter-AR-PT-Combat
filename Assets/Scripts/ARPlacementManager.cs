@@ -31,7 +31,9 @@ public class ARPlacementManager : MonoBehaviour
     void Start()
     {
 #if UNITY_EDITOR
-        // In the Editor, skip AR entirely and just start the game normally
+        // Disable AR components to suppress subsystem warnings in Editor
+        if (arPlaneManager) arPlaneManager.enabled = false;
+        if (arRaycastManager) arRaycastManager.enabled = false;
         if (scanningUI) scanningUI.SetActive(false);
         placed = true;
         return;
