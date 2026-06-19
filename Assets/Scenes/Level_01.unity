@@ -699,7 +699,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &696417534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1503,6 +1503,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1940273063}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1380252993
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1380252994}
+  m_Layer: 0
+  m_Name: ShooterEnemySpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1380252994
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1380252993}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.9063079, z: -0, w: -0.42261827}
+  m_LocalPosition: {x: 0, y: 0, z: 32}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1450956573}
+  m_LocalEulerAnglesHint: {x: 0, y: 230, z: 0}
 --- !u!1 &1383197552
 GameObject:
   m_ObjectHideFlags: 0
@@ -1519,7 +1550,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1383197553
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1583,6 +1614,7 @@ Transform:
   m_Children:
   - {fileID: 2104151174}
   - {fileID: 1077477626}
+  - {fileID: 1380252994}
   - {fileID: 1842008352}
   - {fileID: 2021703396}
   m_Father: {fileID: 1940273063}
@@ -1605,7 +1637,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1484249297
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1781,7 +1813,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 1
+  orthographic: 0
   orthographic size: 4.5
   m_Depth: -1
   m_CullingMask:
@@ -8094,7 +8126,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1970885770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8337,10 +8369,12 @@ MonoBehaviour:
   - {fileID: 1756825559, guid: f79316643c0c2a7409dfd9b85f90b861, type: 3}
   - {fileID: 790838517, guid: be323a82d49f568488a6898eca42b832, type: 3}
   - {fileID: 1045879982, guid: 3935f7f926565954c8fb8bcbf638e9f1, type: 3}
+  - {fileID: 1045879982, guid: d622a2d5ea3b2a347b378638ffa8d702, type: 3}
   spawnPoints:
   - {fileID: 2021703396}
   - {fileID: 1842008352}
   - {fileID: 1077477626}
+  - {fileID: 1380252994}
 --- !u!4 &2104151174
 Transform:
   m_ObjectHideFlags: 0
