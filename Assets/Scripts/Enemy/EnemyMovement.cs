@@ -22,14 +22,14 @@ public class EnemyMovement : MonoBehaviour
 
     void Update()
     {
-        //Pindah ke player position
         if (enemyHealth.currentHealth > 0 && playerHealth.currentHealth > 0)
         {
-            nav.SetDestination(player.position);
+            if (nav.enabled && nav.isOnNavMesh)
+                nav.SetDestination(player.position);
         }
-        else //Stop moving
+        else
         {
-            nav.enabled = false;
+            if (nav.enabled) nav.enabled = false;
         }
     }
 }

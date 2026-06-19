@@ -27,11 +27,11 @@ public class EnemyShooterMovement : MonoBehaviour
 
         float dist = Vector3.Distance(transform.position, player.position);
 
-        if (dist > stoppingDistance)
+        if (dist > stoppingDistance && nav.enabled && nav.isOnNavMesh)
             nav.SetDestination(player.position);
-        else
+        else if (nav.enabled && nav.isOnNavMesh)
         {
-            nav.SetDestination(transform.position); // stop in place
+            nav.SetDestination(transform.position);
             transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
         }
     }
