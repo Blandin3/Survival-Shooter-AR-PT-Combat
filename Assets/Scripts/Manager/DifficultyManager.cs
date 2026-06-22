@@ -30,7 +30,9 @@ public class DifficultyManager : MonoBehaviour
 
         // Sync health slider
         if (playerHealth.healthSlider)
+        {
             playerHealth.healthSlider.maxValue = playerHealth.startingHealth;
             playerHealth.healthSlider.value = playerHealth.currentHealth;
+        }
     }
 }

@@ -1,6 +1,10 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class GameOverManager : MonoBehaviour
 {
@@ -10,8 +14,11 @@ public class GameOverManager : MonoBehaviour
     [Header("End Game UI")]
     public GameObject endGamePanel;
     public Text finalScoreText;
+    public TMP_Text finalScoreTMPText;
     public Text enemiesDefeatedText;
+    public TMP_Text enemiesDefeatedTMPText;
     public Text timeSurvivedText;
+    public TMP_Text timeSurvivedTMPText;
 
     Animator anim;
     bool gameOverTriggered = false;
@@ -52,9 +59,9 @@ public class GameOverManager : MonoBehaviour
         if (endGamePanel)
         {
             endGamePanel.SetActive(true);
-            if (finalScoreText) finalScoreText.text = "Score: " + ScoreManager.score;
-            if (enemiesDefeatedText) enemiesDefeatedText.text = "Enemies Defeated: " + ScoreManager.enemiesDefeated;
-            if (timeSurvivedText) timeSurvivedText.text = "Time Survived: " + Mathf.FloorToInt(ScoreManager.timeSurvived) + "s";
+            SetLabel(finalScoreText, finalScoreTMPText, "Score: " + ScoreManager.score);
+            SetLabel(enemiesDefeatedText, enemiesDefeatedTMPText, "Enemies Defeated: " + ScoreManager.enemiesDefeated);
+            SetLabel(timeSurvivedText, timeSurvivedTMPText, "Time Survived: " + Mathf.FloorToInt(ScoreManager.timeSurvived) + "s");
         }
     }
 
@@ -74,15 +81,42 @@ public class GameOverManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
+    public void ReplayGame()
+    {
+        RestartGame();
+    }
+
     public void GoToMainMenu()
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene("MainMenuScene");
     }
 
+    public void BackToMainMenu()
+    {
+        GoToMainMenu();
+    }
+
+    public void QuitGame()
+    {
+        Time.timeScale = 1f;
+
+#if UNITY_EDITOR
+        EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
+    }
+
     public void ShowWarning(float enemyDistance)
     {
         if (warningText) warningText.text = string.Format("! {0} m", Mathf.RoundToInt(enemyDistance));
         anim.SetTrigger("Warning");
+    }
+
+    void SetLabel(Text legacyText, TMP_Text tmpText, string value)
+    {
+        if (legacyText) legacyText.text = value;
+        if (tmpText) tmpText.text = value;
     }
 }
