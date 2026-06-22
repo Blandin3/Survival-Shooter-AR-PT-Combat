@@ -55,14 +55,8 @@ public class GameOverManager : MonoBehaviour
         PlayerPrefs.SetInt(MainMenuManager.SAVE_EXISTS_KEY, 1);
         PlayerPrefs.Save();
 
-        // Show end game UI
-        if (endGamePanel)
-        {
-            endGamePanel.SetActive(true);
-            SetLabel(finalScoreText, finalScoreTMPText, "Score: " + ScoreManager.score);
-            SetLabel(enemiesDefeatedText, enemiesDefeatedTMPText, "Enemies Defeated: " + ScoreManager.enemiesDefeated);
-            SetLabel(timeSurvivedText, timeSurvivedTMPText, "Time Survived: " + Mathf.FloorToInt(ScoreManager.timeSurvived) + "s");
-        }
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("EndGameScene");
     }
 
     // Public notifier so other scripts (PlayerHealth) can trigger game over immediately
@@ -86,15 +80,15 @@ public class GameOverManager : MonoBehaviour
         RestartGame();
     }
 
-    public void GoToMainMenu()
-    {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene("MainMenuScene");
-    }
-
     public void BackToMainMenu()
     {
-        GoToMainMenu();
+        ReturnToMainMenuScene();
+    }
+
+    public void ReturnToMainMenuScene()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("MainMenuGScene");
     }
 
     public void QuitGame()
