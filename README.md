@@ -1,76 +1,115 @@
+
 # 3D Survival Shooter Game
 
-A top-down 3D survival shooter built in Unity where you fight off waves of enemies for as long as possible while managing your health and using power-ups to stay alive.
+A top-down 3D survival shooter built in Unity. You fight endless enemy waves, manage your health, collect power-ups, and try to survive as long as possible while building your score.
 
-## Built With
+## What The Game Does
 
-* [![Unity][Unity.com]][Unity-url]
+This project has three main scenes:
 
-[Unity.com]: https://img.shields.io/badge/Unity-FFFFFF?style=for-the-badge&logo=unity&logoColor=black
-[Unity-url]: https://unity.com/
+1. `MainMenuGScene` is the entry point. It shows the main window panel and the leaderboard panel.
+2. `Level_01` is the gameplay scene where you fight enemies, earn score, and lose health.
+3. `EndGameScene` is the results screen that appears when the player dies.
+
+When the player dies, the game loads `EndGameScene` directly to display:
+- Final score
+- Number of enemies killed
+- Time survived
+- Replay, back to main menu, and quit buttons
 
 ---
 
-## How to Play
+## How To Play
 
 ### Objective
-Survive as long as possible against endless waves of enemies. Every enemy you kill earns you points. The game ends when your health reaches zero.
+Survive as long as possible against endless waves of enemies. Every enemy kill increases your score and kill count. The run ends when your health reaches zero.
 
 ### Movement
-Use the **W / A / S / D** keys or the **Arrow Keys** to move your character in any direction. Your character always faces toward your mouse cursor, allowing you to move in one direction while aiming in another — a key skill for dodging enemies while keeping your shots on target.
+Use **W / A / S / D** or the **Arrow Keys** to move your character in any direction. Your character always faces toward your mouse cursor, allowing you to move in one direction while aiming in another.
 
 ### Aiming & Shooting
-Move your **mouse** to aim. Your character automatically rotates to face wherever your cursor points on the floor. Hold down the **Left Mouse Button** to shoot continuously. The gun fires rapid shots in a straight line toward your aim point, so keep your cursor on the enemy to deal damage effectively. Each shot deals 20 damage to an enemy.
+Move your **mouse** to aim. Your character automatically rotates to face wherever your cursor points on the floor. Hold the **Left Mouse Button** to shoot continuously. Each shot deals damage to enemies, and killing an enemy increases your score by **10 points**.
 
 ### Health
-Your health starts at **100** and is displayed as a slider on the screen. Every time an enemy reaches and touches you, it deals **10 damage** every 0.5 seconds. When your health drops to zero, the game is over and a Game Over screen appears. You can then restart from the beginning.
+Your health starts at **100** and is displayed as a slider on the HUD. Every time an enemy reaches and touches you, it deals **10 damage** every 0.5 seconds. The slider decreases as you take damage, and when health reaches zero the game loads the end-game scene.
 
 ### Enemies
-Three types of enemies spawn periodically and relentlessly chase you across the arena using pathfinding navigation:
-- **Zombunny** — a fast, small zombie rabbit that closes the distance quickly.
-- **ZomBear** — a larger, more threatening zombie bear.
-- **Hellephant** — a powerful hellish elephant that hits hard.
+Three enemy types spawn periodically and relentlessly chase you using pathfinding navigation:
+- **Zombunny** — a fast, small zombie rabbit
+- **ZomBear** — a larger, threatening zombie bear
+- **Hellephant** — a powerful hellish elephant
 
-Each enemy starts with **100 health**. Shoot them repeatedly to whittle their health down. Once defeated, they play a death animation and sink into the ground. Enemies continue spawning at regular intervals, so the pressure never lets up.
+Each enemy starts with **100 health**. Shoot them repeatedly to defeat them. Once defeated, they play a death animation and disappear. Enemies continue spawning at regular intervals, so the pressure never lets up.
 
 ### Power-Ups
 Two types of power-ups can appear in the arena. Walk over them to collect them instantly:
-- **Healing (Heart icon)** — Restores **40 health** points. If your health is already above 60, it caps at the maximum of 100. Prioritize picking this up whenever you are low on health.
-- **Speed Up (Star icon)** — Boosts your movement speed from the default **6** up to **10** for **10 seconds**, making it much easier to outrun and reposition away from enemies. After the duration expires, your speed returns to normal automatically.
+- **Healing (Heart icon)** — Restores **40 health** points. Caps at maximum of **100**.
+- **Speed Up (Star icon)** — Boosts your movement speed from **6** up to **10** for **10 seconds**, making it easier to outrun and reposition away from enemies.
 
-### Score
-Your score is displayed in the top corner of the screen and increases each time you kill an enemy. Each enemy kill is worth **10 points**. Try to beat your personal best by surviving longer and taking down more enemies.
+### Score And Time
+The score counter updates during gameplay, the kill count tracks how many enemies you defeated, and the timer tracks how long the run lasted. Those values are saved and shown again on the end-game scene.
 
-### Pausing the Game
-Press the **Pause button** in the UI to pause the game at any time. The game world freezes completely and all audio stops. Press it again to resume.
+### Pausing
+Press the **Pause button** in the UI to pause and resume the game at any time.
+
+---
+
+## Menu And End-Game Flow
+
+### Main Menu
+In `MainMenuGScene`, the main panel is the default view. From there you can:
+1. Start a new game
+2. Continue a saved run if one exists
+3. Open the leaderboard
+4. Open the difficulty panel
+5. Quit the game
+
+### Leaderboard Panel
+The leaderboard panel has a back button that returns you to the previous main window panel instead of leaving the menu scene.
+
+### End-Game Scene
+When the player dies, the game switches to `EndGameScene` to display the saved results and offer:
+1. Replay, which starts `Level_01` again
+2. Back to main menu, which returns to `MainMenuGScene`
+3. Quit, which exits the application
 
 ---
 
 ## Features
-1. **Power-Ups** — Speed boost and healing pickups to aid survival
-2. **HUD** — Live score counter, health bar, and pause functionality
-3. **Enemies** — Three distinct enemy types with AI pathfinding and attack behavior
-4. **Sound Effects** — Audio feedback for shooting, taking damage, enemy deaths, and power-up collection
+
+1. Live score, kill count, and survival time tracking
+2. Separate end-game results scene
+3. Leaderboard panel with saved sessions
+4. Health slider and damage feedback
+5. Enemy pathfinding and attacks
+6. Power-ups for healing and speed boost
+7. Replay, back, and quit actions from the end-game screen
+8. Pause functionality
 
 ---
 
 ## Prerequisite
 
-- [Unity 2018.3.3](https://unity3d.com/get-unity/download/archive)
+* Unity 6000.3.16f or newer
 
 ## Installation
 
-1. Install [Unity](https://store.unity.com/front-page?check_logged_in=1#plans-individual) on your machine
-2. Open Unity Hub and click **Add project from disk**
-3. Select this project folder and open it
-4. Once loaded, open the `Level_01` scene from `Assets/Scenes/` and press **Play**
+1. Install Unity on your machine.
+2. Open Unity Hub and choose **Add project from disk**.
+3. Select this project folder.
+4. Make sure `MainMenuGScene`, `Level_01`, and `EndGameScene` are included in Build Settings.
+5. Press Play from `Level_01` to test the gameplay flow.
+
+## How The Implementation Works
+
+1. Enemies add score and increment the kill count when they die.
+2. The player health script updates the slider every time damage is taken.
+3. The game-over manager saves the run data and loads `EndGameScene`.
+4. The end-game scene controller reads the saved data and fills in the results text.
+5. The replay, back, and quit buttons are wired directly to the end-game scene controller.
+6. The leaderboard back button returns to the main menu panel without leaving the menu scene.
 
 ## Contributing
 
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+Contributions are welcome. If you want to improve the game, fork the repo and open a pull request.
 
-If you have a suggestion that would make this better, please fork the repo and create a pull request.
-
-## License
-
-All the code available under the MIT license. See [LICENSE](LICENSE).
