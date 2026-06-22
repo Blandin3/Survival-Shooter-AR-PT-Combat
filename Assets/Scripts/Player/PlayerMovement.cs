@@ -41,8 +41,21 @@ public class PlayerMovement : MonoBehaviour
 
     void Turning()
     {
+        Camera mainCamera = Camera.main;
+        if (mainCamera == null)
+        {
+            return;
+        }
+
+        Vector3 pointerPosition = Input.mousePosition;
+        if (float.IsInfinity(pointerPosition.x) || float.IsInfinity(pointerPosition.y) || float.IsInfinity(pointerPosition.z) ||
+            float.IsNaN(pointerPosition.x) || float.IsNaN(pointerPosition.y) || float.IsNaN(pointerPosition.z))
+        {
+            return;
+        }
+
         //Buat Ray dari posisi mouse di layar
-        Ray camRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray camRay = mainCamera.ScreenPointToRay(pointerPosition);
 
         //Buat raycast untuk floorHit
         RaycastHit floorHit;

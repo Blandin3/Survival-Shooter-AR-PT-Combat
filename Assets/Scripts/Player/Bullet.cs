@@ -19,8 +19,8 @@ public class Bullet : MonoBehaviour
         timer += Time.deltaTime;
         if (timer >= lifetime)
         {
-            if (EnemyBulletPool.Instance != null)
-                EnemyBulletPool.Instance.Return(gameObject);
+            if (BulletPool.Instance != null)
+                BulletPool.Instance.Return(gameObject);
             else
                 gameObject.SetActive(false);
         }
@@ -32,8 +32,8 @@ public class Bullet : MonoBehaviour
         if (player != null)
             player.TakeDamage(damage);
 
-        if (EnemyBulletPool.Instance != null)
-            EnemyBulletPool.Instance.Return(gameObject);
+        if (BulletPool.Instance != null)
+            BulletPool.Instance.Return(gameObject);
         else
             gameObject.SetActive(false);
     }

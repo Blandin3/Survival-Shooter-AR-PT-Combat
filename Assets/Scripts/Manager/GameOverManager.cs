@@ -58,6 +58,16 @@ public class GameOverManager : MonoBehaviour
         }
     }
 
+    // Public notifier so other scripts (PlayerHealth) can trigger game over immediately
+    public void OnPlayerDeath()
+    {
+        if (!gameOverTriggered)
+        {
+            gameOverTriggered = true;
+            TriggerGameOver();
+        }
+    }
+
     public void RestartGame()
     {
         Time.timeScale = 1f;
@@ -67,7 +77,7 @@ public class GameOverManager : MonoBehaviour
     public void GoToMainMenu()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene("MainMenuScene");
     }
 
     public void ShowWarning(float enemyDistance)

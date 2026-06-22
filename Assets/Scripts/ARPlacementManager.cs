@@ -27,6 +27,13 @@ public class ARPlacementManager : MonoBehaviour
 
     bool placed = false;
     static readonly List<ARRaycastHit> hits = new List<ARRaycastHit>();
+    [Header("Placement Settings")]
+    [Tooltip("Vertical offset applied after placement to keep the game root slightly above the detected plane")]
+    public float placementYOffset = 0.02f;
+    [Tooltip("Vertical offset applied to the player above the plane (meters)")]
+    public float playerYOffset = 0.05f;
+    [Tooltip("Vertical offset applied to enemy spawn points above the plane (meters)")]
+    public float spawnPointYOffset = 0.02f;
 
     void Start()
     {
@@ -69,14 +76,48 @@ public class ARPlacementManager : MonoBehaviour
 
     void PlaceGame(Pose pose)
     {
-        // Place and activate the game world
-        gameRoot.transform.SetPositionAndRotation(pose.position, pose.rotation);
+        // Place and activate the game world slightly above the plane to avoid clipping
+        Vector3 placedPosition = pose.position + pose.up * placementYOffset;
+        gameRoot.transform.SetPositionAndRotation(placedPosition, pose.rotation);
         gameRoot.SetActive(true);
 
-        // Disable ongoing plane scanning to save performance
-        arPlaneManager.enabled = false;
+        // Align player and spawn points to the detected plane height so they sit on the floor
+        AlignGameObjectsToPlane(pose.position.y);
+
+
+    void AlignGameObjectsToPlane(float planeY)
+    {
+        // Align player (find by tag)
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+        {
+            Vector3 p = player.transform.position;
+            player.transform.position = new Vector3(p.x, planeY + playerYOffset, p.z);
+        }
+
+        // Align spawn points referenced by any EnemyFactory instances
+        var factories = FindObjectsOfType<EnemyFactory>();
+        foreach (var f in factories)
+        {
+            if (f.spawnPoints == null) continue;
+            for (int i = 0; i < f.spawnPoints.Length; i++)
+            {
+                if (f.spawnPoints[i] == null) continue;
+                Vector3 s = f.spawnPoints[i].position;
+                f.spawnPoints[i].position = new Vector3(s.x, planeY + spawnPointYOffset, s.z);
+            }
+        }
+    }
+        // Switch detected planes to occlusion so game appears grounded
         foreach (var plane in arPlaneManager.trackables)
-            plane.gameObject.SetActive(false);
+        {
+            CustomPlaneVisualizer viz = plane.GetComponent<CustomPlaneVisualizer>();
+            if (viz != null) viz.SwitchToOcclusion();
+            else plane.gameObject.SetActive(false);
+        }
+
+        // Stop detecting new planes
+        arPlaneManager.enabled = false;
 
         // Hide scanning UI
         if (scanningUI) scanningUI.SetActive(false);

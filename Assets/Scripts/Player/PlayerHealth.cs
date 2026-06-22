@@ -30,7 +30,24 @@ public class PlayerHealth : MonoBehaviour
         playerMovement = GetComponent<PlayerMovement>();
 
         playerShooting = GetComponentInChildren <PlayerShooting> ();
+        // Ensure initial health is set from startingHealth so scene-serialized values
+        // (e.g. 0) don't leave the player immediately dead at start.
         currentHealth = startingHealth;
+
+        // If the health slider or damage image weren't assigned in the inspector,
+        // try to find common UI elements by name so the Game view shows damage.
+        if (healthSlider == null)
+        {
+            var sliderObj = GameObject.Find("HealthSlider");
+            if (sliderObj) healthSlider = sliderObj.GetComponent<UnityEngine.UI.Slider>();
+        }
+        if (damageImage == null)
+        {
+            var dmgObj = GameObject.Find("DamageImage");
+            if (dmgObj) damageImage = dmgObj.GetComponent<UnityEngine.UI.Image>();
+        }
+
+        if (healthSlider) healthSlider.value = currentHealth;
     }
 
 
@@ -110,6 +127,13 @@ public class PlayerHealth : MonoBehaviour
         playerMovement.enabled = false;
 
         playerShooting.enabled = false;
+
+        // Notify GameOverManager so the end-game UI appears immediately
+        var gom = FindObjectOfType<GameOverManager>();
+        if (gom != null)
+        {
+            gom.OnPlayerDeath();
+        }
     }
 
     public void RestartLevel()
